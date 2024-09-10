@@ -118,6 +118,13 @@ urlpatterns = [
 ```
 23. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
 24. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
+
+  
+### 🔄 Alur Django  
+    ![Django Flow Chart](https://github.com/arishashaista/Tonopedia/blob/master/alur_bagan/bagan_request.png)  
+**Penjelasan:**  
+Pengguna mengirimkan permintaan melalui internet untuk mengakses halaman web. Server menerima permintaan tersebut dan memprosesnya. Kemudian, Web server bertindak sebagai perantara yang menghubungkan pengguna dengan Django. Permintaan dari website diarahkan ke urls.py yang bertugas memetakan URL ke fungsi atau kelas di views.py. Setelah URL dihubungkan, views.py menangani alur kerja aplikasi yang diperlukan. views.py berkomunikasi dengan models.py untuk mengambil atau menyimpan data ke dalam database. models.py sendiri berisi struktur dan logika yang berhubungan dengan penyimpanan data. Setelah data diproses oleh views.py, data tersebut dikirim ke berkas template HTML untuk ditampilkan kepada pengguna dalam format halaman web.  
+
   
 ### ⚙️ Fungsi Git dalam Pengembangan Perangkat Lunak
 Pada pengembangan perangkat lunak, Git berfungsi untuk melacak perubahan-perubahan pada kode selama proses pengembangan. Selain itu, Git mengizinkan berbagai pengembang untuk bekerja di proyek yang sama secara serentak, dan memastikan perubahan yang dilakukan pengembang tidak memiliki konflik satu sama lain.  
