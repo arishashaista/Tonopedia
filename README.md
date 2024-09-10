@@ -7,10 +7,10 @@ Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
    **Jawab:**  
      a. Membuat direktori lokal bernama `Tonopedia`.  
      b. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
-     ```
-        No language indicated, so no syntax highlighting. 
-        But let's throw in a <b>tag</b>.
-     ```  
+&nbsp;```
+&nbsp;No language indicated, so no syntax highlighting. 
+&nbsp;But let's throw in a <b>tag</b>.
+&nbsp;```  
      c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
         ```
         source env/bin/activate
