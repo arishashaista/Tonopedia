@@ -10,17 +10,20 @@ Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
         ```
         python3 -m venv env
         ```
+        </br>
      c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS): </br>
         ```
         source env/bin/activate
         ```
+        </br>
      d. Dalam direktori `Tonopedia`, Buat file bernama 'requirements.txt' dan tambahkan __dependencies__ berikut: </br>
         ```
-        django
-        gunicorn
-        whitenoise
-        psycopg2-binary
-        requests
-        urllib3
+        django</br>
+        gunicorn</br>
+        whitenoise</br>
+        psycopg2-binary</br>
+        requests</br>
+        urllib3</br>
         ```
+        </br>
      e. 
