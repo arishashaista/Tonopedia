@@ -33,6 +33,5 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 
-**2. Jelaskan fungsi git dalam pengembangan perangkat lunak!** </br>  
-
-   **Jawab:** </br>  
+## ⚙️ FUNGSI GIT DALAM PENGEMBANGAN PERANGKAT LUNAK
+    Pada pengembangan perangkat lunak, Git berfungsi untuk melacak perubahan-perubahan pada kode selama proses pengembangan. Selain itu, Git mengizinkan berbagai pengembang untuk      bekerja di proyek yang sama secara serentak, dan memastikan perubahan yang dilakukan pengembang tidak memiliki konflik satu sama lain.
