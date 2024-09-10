@@ -10,7 +10,6 @@ Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
         ```
         python3 -m venv env
         ```
-        </br>
      c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS): </br>
         ```
         source env/bin/activate
