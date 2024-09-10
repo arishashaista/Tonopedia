@@ -1,17 +1,18 @@
 ## 📎 DEPLOYMENT
-Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
-
+Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id  
+  
+  
 ## 💻 IMPLEMENTASI STEP-BY-STEP
-&nbsp;&nbsp;&nbsp;1. Membuat direktori lokal bernama `Tonopedia`.  
-&nbsp;&nbsp;&nbsp;2. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
+1. Membuat direktori lokal bernama `Tonopedia`.  
+2. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
 ```bash
 python3 -m venv env
 ```
-&nbsp;&nbsp;&nbsp;3. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
+3. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
 ```bash
 source env/bin/activate
 ```
-&nbsp;&nbsp;&nbsp;4. Membuat file bernama 'requirements.txt' dalam direktori dan menambahkan *dependencies* berikut.  
+4. Membuat file bernama 'requirements.txt' dalam direktori dan menambahkan *dependencies* berikut.  
 ```
 django  
 gunicorn  
@@ -20,36 +21,36 @@ psycopg2-binary
 requests  
 urllib3  
 ```
-&nbsp;&nbsp;&nbsp;5. Melakukan instalasi dengan perintah berikut.  
+5. Melakukan instalasi dengan perintah berikut.  
 ```bash
 pip install -r requirements.txt
 ```
-&nbsp;&nbsp;&nbsp;6. Membuat proyek Django bernama `tonopedia` dengan perintah berikut.  
+6. Membuat proyek Django bernama `tonopedia` dengan perintah berikut.  
 ```bash
 django-admin startproject tonopedia .
 ```
-&nbsp;&nbsp;&nbsp;7. Menambahkan kedua string berikut di `ALLOWED_HOSTS` pada berkas `settings.py` yang ada pada direktori.
+7. Menambahkan kedua string berikut di `ALLOWED_HOSTS` pada berkas `settings.py` yang ada pada direktori.
 ```python
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 ```
-&nbsp;&nbsp;&nbsp;8. Membuat repositori GitHub baru bernama `Tonopedia` dengan visibilitas publik.  
-&nbsp;&nbsp;&nbsp;9. Membuat berkas `.gitignore` dan isinya.  
-&nbsp;&nbsp;&nbsp;10. Menginisiasi direktori lokal `Tonopedia` sebagai repositori git.  
-&nbsp;&nbsp;&nbsp;11. Membuat proyek baru di `Pacil Web Service` dengan `Project Name` bernama `tonopedia`.  
-&nbsp;&nbsp;&nbsp;12. Menambahkan `URL Deployment PWS` pada `ALLOWED_HOSTS` di `settings.py`.  
-&nbsp;&nbsp;&nbsp;13. Membuat aplikasi baru dengan nama main dengan perintah berikut.  
+8. Membuat repositori GitHub baru bernama `Tonopedia` dengan visibilitas publik.  
+9. Membuat berkas `.gitignore` dan isinya.  
+10. Menginisiasi direktori lokal `Tonopedia` sebagai repositori git.  
+11. Membuat proyek baru di `Pacil Web Service` dengan `Project Name` bernama `tonopedia`.  
+12. Menambahkan `URL Deployment PWS` pada `ALLOWED_HOSTS` di `settings.py`.  
+13. Membuat aplikasi baru bernama `main` dengan perintah berikut.  
 ```bash
 python manage.py startapp main
 ```
-&nbsp;&nbsp;&nbsp;14. Membuka berkas `settings.py` pada direktori `tonopedia` dan menambahkan string berikut pada `INSTALLED_APPS`.
+14. Membuka berkas `settings.py` pada direktori `tonopedia` dan menambahkan string berikut pada `INSTALLED_APPS`.
 ```python
 INSTALLED_APPS = [
     ...,
     'main'
 ]
 ```
-&nbsp;&nbsp;&nbsp;15. Membuat direktori baru bernama `templates` di dalam direktori aplikasi `main`.  
-&nbsp;&nbsp;&nbsp;16. Membuat berkas baru bernama `main.html` pada direktori `templates` dan mengisi berkas `main.html` sebagai berikut.
+15. Membuat direktori baru bernama `templates` di dalam direktori aplikasi `main`.  
+16. Membuat berkas baru bernama `main.html` pada direktori `templates` dan mengisi berkas `main.html` sebagai berikut.
 ```django
 <h1>Tonopedia</h1>
 
@@ -62,6 +63,58 @@ INSTALLED_APPS = [
 <h5>Class:</h5>
 <p>{{ class }}</p>
 ```
+17. Mengisi berkas `models.py` pada direktori aplikasi `main` sebagai berikut.
+```python
+from django.db import models
 
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+```
+18. Membuat migrasi model dan menerapkan migrasi ke dalam basis data lokal dengan perintah berikut.
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+19. Membuat fungsi pada `views.py` pada direktori `main` sebagai berikut.
+```python
+from django.shortcuts import render
+
+def show_main(request):
+    context = {
+        'npm' : '2306123456',
+        'name': 'Arisha Shaista Aurelya',
+        'class': 'PBP C'
+    }
+
+    return render(request, "main.html", context)
+```
+20. Membuat berkas `urls.py` pada direktori `main` dengan isi sebagai berikut untuk mengonfirmasi *routing* URL aplikasi `main` .
+```python
+from django.urls import path
+from main.views import show_main
+
+app_name = 'main'
+
+urlpatterns = [
+    path('', show_main, name='show_main'),
+]
+```
+21. Menambahkan fungsi impor dan rute URL pada `urls.py` yang berada di direktori `tonopedia` untuk mengonfigurasi *routing* URL proyek.
+```python
+...
+from django.urls import path, include
+...
+```python
+urlpatterns = [
+    ...
+    path('', include('main.urls')),
+    ...
+]
+```
+23. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
+24. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
+  
 ## ⚙️ FUNGSI GIT DALAM PENGEMBANGAN PERANGKAT LUNAK
-&nbsp;&nbsp;&nbsp;Pada pengembangan perangkat lunak, Git berfungsi untuk melacak perubahan-perubahan pada kode selama proses pengembangan. Selain itu, Git mengizinkan berbagai pengembang untuk bekerja di proyek yang sama secara serentak, dan memastikan perubahan yang dilakukan pengembang tidak memiliki konflik satu sama lain.
+Pada pengembangan perangkat lunak, Git berfungsi untuk melacak perubahan-perubahan pada kode selama proses pengembangan. Selain itu, Git mengizinkan berbagai pengembang untuk bekerja di proyek yang sama secara serentak, dan memastikan perubahan yang dilakukan pengembang tidak memiliki konflik satu sama lain.
