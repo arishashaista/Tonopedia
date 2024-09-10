@@ -9,8 +9,8 @@ Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
      b. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
 ```
 python3 -m venv env
-```</br>
-c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
+```
+     c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
 ```
 source env/bin/activate
 ```
