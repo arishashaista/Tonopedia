@@ -1,4 +1,4 @@
-## Deployment
+## 📎 DEPLOYMENT
 Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
 
 ## 
@@ -7,7 +7,9 @@ Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
 &nbsp;&nbsp;&nbsp;**Jawab:**  
 &nbsp;&nbsp;&nbsp;a. Membuat direktori lokal bernama `Tonopedia`.  
 &nbsp;&nbsp;&nbsp;b. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
-<pre><code>python3 -m venv env</code></pre>
+```bash
+python3 -m venv env
+```
 &nbsp;&nbsp;&nbsp;c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
 <pre><code>source env/bin/activate</code></pre>  
 &nbsp;&nbsp;&nbsp;d. Dalam direktori `Tonopedia`, Buat file bernama 'requirements.txt' dan tambahkan __dependencies__ berikut:  
