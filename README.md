@@ -1,8 +1,11 @@
-## 📎 DEPLOYMENT
+# TONOPEDIA  
+Tonopedia? Klik Klik Beres!
+
+### 📎 Deployment
 Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id  
   
   
-## 💻 IMPLEMENTASI STEP-BY-STEP
+### 💻 Langkah Implementasi
 1. Membuat direktori lokal bernama `Tonopedia`.  
 2. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
 ```bash
@@ -116,5 +119,9 @@ urlpatterns = [
 23. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
 24. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
   
-## ⚙️ FUNGSI GIT DALAM PENGEMBANGAN PERANGKAT LUNAK
-Pada pengembangan perangkat lunak, Git berfungsi untuk melacak perubahan-perubahan pada kode selama proses pengembangan. Selain itu, Git mengizinkan berbagai pengembang untuk bekerja di proyek yang sama secara serentak, dan memastikan perubahan yang dilakukan pengembang tidak memiliki konflik satu sama lain.
+### ⚙️ Fungsi Git dalam Pengembangan Perangkat Lunak
+Pada pengembangan perangkat lunak, Git berfungsi untuk melacak perubahan-perubahan pada kode selama proses pengembangan. Selain itu, Git mengizinkan berbagai pengembang untuk bekerja di proyek yang sama secara serentak, dan memastikan perubahan yang dilakukan pengembang tidak memiliki konflik satu sama lain.  
+
+
+### ❓ Mengapa Framework Django Dijadikan Permulaan Pembelajaran Pengembangan Perangkat Lunak?  
+Django sering dijadikan pilihan untuk pembelajaran pengembangan perangkat lunak karena kemudahan penggunaannya, terutama bagi mereka yang sudah familiar dengan Python, mengingat pada mata kuliah DDP-1 mahasiswa telah diajarkan mengenai Python. Framework ini memiliki sistem template yang intuitif serta *library* aplikasi yang dapat digunakan kembali, sehingga memudahkan para pengembang untuk menambahkan fungsionalitas pada proyek mereka.  Framework ini juga dilengkapi dengan sistem penamaan untuk setiap fungsi dan komponen, serta panel admin yang lebih mudah digunakan dibandingkan framework lain. Dengan berbagai modul bawaan seperti ORM, panel admin, migrasi, dan autentikasi. Dengan demikian, Django mempercepat proses pengembangan tanpa harus memulai dari nol, menjadikannya pilihan tepat untuk permulaan pembelajaran pengembangan perangkat lunak.
