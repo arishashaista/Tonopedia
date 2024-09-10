@@ -65,6 +65,15 @@ INSTALLED_APPS = [
 
 <h5>Class:</h5>
 <p>{{ class }}</p>
+
+<h5>Nama Produk:</h5>
+<p>{{ product_name }}</p>
+
+<h5>Harga:</h5>
+<p>{{ price }}</p>
+
+<h5>Deskripsi Produk:</h5>
+<p>{{ description }}</p>
 ```
 17. Mengisi berkas `models.py` pada direktori aplikasi `main` sebagai berikut.
 ```python
@@ -83,12 +92,17 @@ python manage.py migrate
 19. Membuat fungsi pada `views.py` pada direktori `main` sebagai berikut.
 ```python
 from django.shortcuts import render
+from .models import Product
 
 def show_main(request):
+    model = Product.objects.all()
     context = {
         'npm' : '2306123456',
         'name': 'Arisha Shaista Aurelya',
-        'class': 'PBP C'
+        'class': 'PBP C',
+        'product_name': 'Soffell',
+        'price': 27000,
+        'description': 'Soffell adalah penangkal nyamuk yang memiliki wangi lembut dan tidak membuat kulit kering',
     }
 
     return render(request, "main.html", context)
@@ -116,8 +130,8 @@ urlpatterns = [
     ...
 ]
 ```
-23. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
-24. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
+22. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
+23. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
 
   
 ### 🔄 Alur Django  
