@@ -4,15 +4,12 @@ Tautan PWS: http://arisha-shaista-tonopedia.pbp.cs.ui.ac.id
 ## 
 **1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).**  
 
-&nbsp;&nbsp;**Jawab:**  
-          a. Membuat direktori lokal bernama `Tonopedia`.  
-          b. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
-          ```
-          python3 -m venv env
-          ```
-
-
-     c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
+&nbsp;&nbsp;&nbsp;**Jawab:**  
+&nbsp;&nbsp;&nbsp;a. Membuat direktori lokal bernama `Tonopedia`.  
+&nbsp;&nbsp;&nbsp;b. Membuat virtual environment dengan cara membuka terminal direktori dan menjalankan perintah berikut (untuk Mac OS):  
+&nbsp;&nbsp;&nbsp;```
+          python3 -m venv env```
+&nbsp;&nbsp;&nbsp;c. Mengaktifkan virtual environment dengan perintah berikut (untuk Mac OS):  
 
 
 ```
