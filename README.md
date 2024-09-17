@@ -219,214 +219,222 @@ Django menghasilkan token unik untuk setiap sesi pengguna, yang disertakan dalam
 
 **Jawaban**:
 
-1. Membuat direktori `templates` pada direktori utama dan isi direktori tersebut dengan `base.html` sebagai berikut untuk membuat kerangka umum.
+1.  Membuat direktori `templates` pada direktori utama dan isi direktori tersebut dengan `base.html` sebagai berikut untuk membuat kerangka umum.
 
-   ```html
-   {% load static %}
-   <!DOCTYPE html>
-   <html lang="en">
-     <head>
-       <meta charset="UTF-8" />
-       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       {% block meta %} {% endblock meta %}
-     </head>
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %} {% endblock meta %}
+  </head>
 
-     <body>
-       {% block content %} {% endblock content %}
-     </body>
-   </html>
-   ```
+  <body>
+    {% block content %} {% endblock content %}
+  </body>
+</html>
+```
 
-   2. Menambahkan kode berikut pada `tonopedia/settings.py/` :
+2.  Menambahkan kode berikut pada `tonopedia/settings.py/` :
 
-   ```
-   ...
-   TEMPLATES = [
-       {
-           'BACKEND': 'django.template.backends.django.DjangoTemplates',
-           'DIRS': [BASE_DIR / 'templates'], # Tambahkan konten baris ini
-           'APP_DIRS': True,
-           ...
-       }
-   ]
-   ...
-   ```
+```
+...
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'], # Tambahkan konten baris ini
+        'APP_DIRS': True,
+        ...
+    }
+]
+...
+```
 
-   3. Mengubah `main.html` pada `main/templates/` sebagai berikut.
+3.  Mengubah `main.html` pada `main/templates/` sebagai berikut.
 
-   ```
-   {% extends 'base.html' %} {% block content %}
-   <h1>Tonopedia</h1>
+```
+{% extends 'base.html' %} {% block content %}
+<h1>Tonopedia</h1>
 
-   <h5>NPM: {{ npm }}</h5>
+<h5>NPM: {{ npm }}</h5>
 
-   <h5>Name: {{ name }}</h5>
+<h5>Name: {{ name }}</h5>
 
-   <h5>Class: {{ class }}</h5>
+<h5>Class: {{ class }}</h5>
 
-   {% endblock content %}
-   ```
+{% endblock content %}
+```
 
-   4. Menambahkan atribut `time` dan `id` pada `models.py` dan melakukan migrasi model.
+4.  Menambahkan atribut `time` dan `id` pada `models.py` dan melakukan migrasi model.
 
-   ```
-   from django.db import models
-   import uuid
+```
+from django.db import models
+import uuid
 
-   class Product(models.Model):
-       id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-       name = models.CharField(max_length=255)
-       price = models.IntegerField()
-       description = models.TextField()
-   ```
+class Product(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    price = models.IntegerField()
+    description = models.TextField()
+```
 
-   5. Membuat `forms.py` pada direktori `main` untuk kebutuhan input dari user.
+5.  Membuat `forms.py` pada direktori `main` untuk kebutuhan input dari user.
 
-   ```
-   from django.forms import ModelForm
-   from main.models import Product
+```
+from django.forms import ModelForm
+from main.models import Product
 
-   class ProductForm(ModelForm):
-       class Meta:
-           model = Product
-           fields = ["name", "price", "description"]
-   ```
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "price", "description"]
+```
 
-   6. Menambahkan import pada `main/views.py/` sebagai berikut.
+6.  Menambahkan import pada `main/views.py/` sebagai berikut.
 
-   ```python
-   from django.shortcuts import render, redirect
-   from main.forms import ProductForm
-   from main.models import Product
-   ```
+```python
+from django.shortcuts import render, redirect
+from main.forms import ProductForm
+from main.models import Product
+```
 
-   7. Membuat fungsi untuk menambahkan produk baru.
+7.  Membuat fungsi untuk menambahkan produk baru.
 
-   ```python
-   def create_product_entry(request):
-       form = ProductForm(request.POST or None)
+```python
+def create_product_entry(request):
+    form = ProductForm(request.POST or None)
 
-       if form.is_valid() and request.method == "POST":
-           form.save()
-           return redirect('main:show_main')
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect('main:show_main')
 
-       context = {'form': form}
-       return render(request, "create_product_entry.html", context)
-   ```
+    context = {'form': form}
+    return render(request, "create_product_entry.html", context)
+```
 
-   8. Menambahkan kode berikut pada fungsi `show_main`.
+8.  Menambahkan kode berikut pada fungsi `show_main`.
 
-   ```python
-       context = {
-           ...
-           'product_entries': model,
-           ...
-       }
-   ```
+```python
+    context = {
+        ...
+        'product_entries': model,
+        ...
+    }
+```
 
-   9. Membuka `urls.py` pada direktori `main` dan import fungsi `create_product_entry`.
+9.  Membuka `urls.py` pada direktori `main` dan import fungsi `create_product_entry`.
 
-   ```python
-   from main.views import show_main, create_product_entry
-   ```
+```python
+from main.views import show_main, create_product_entry
+```
 
-   10. Menambahkan path URL ke dalam variabel `urlpatterns` pada `main/urls.py/`.
+10. Menambahkan path URL ke dalam variabel `urlpatterns` pada `main/urls.py/`.
 
-   ```python
-   urlpatterns = [
-       ...
-       path('create-product-entry', create_product_entry, name='create_product_entry'),
-       ...
-   ]
-   ```
+```python
+urlpatterns = [
+    ...
+    path('create-product-entry', create_product_entry, name='create_product_entry'),
+    ...
+]
+```
 
-   11. Membuat berkas HTML baru dengan nama `create_proudct_entry.html` pada direktori `main/templates` dan isi dengan kode berikut.
+11. Membuat berkas HTML baru dengan nama `create_proudct_entry.html` pada direktori `main/templates` dan isi dengan kode berikut.
 
-   ```html
-   {% extends 'base.html' %} {% block content %}
-   <h1>Add New Product Entry</h1>
+```html
+{% extends 'base.html' %} {% block content %}
+<h1>Add New Product Entry</h1>
 
-   <form method="POST">
-     {% csrf_token %}
-     <table>
-       {{ form.as_table }}
-       <tr>
-         <td></td>
-         <td>
-           <input type="submit" value="Add New Product" />
-         </td>
-       </tr>
-     </table>
-   </form>
+<form method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+    <tr>
+      <td></td>
+      <td>
+        <input type="submit" value="Add New Product" />
+      </td>
+    </tr>
+  </table>
+</form>
 
-   {% endblock %}
-   ```
+{% endblock %}
+```
 
-   12. Membuka `main.html` dan tambahkan kode berikut.
+12. Membuka `main.html` dan tambahkan kode berikut.
 
-   ```html
-   {% if not product_entries %}
-   <p>Belum ada produk yang diunggah.</p>
-   {% else %}
-   <table>
-     <tr>
-       <th>Name</th>
-       <th>Price</th>
-       <th>Description</th>
-     </tr>
+```html
+{% if not product_entries %}
+<p>Belum ada produk yang diunggah.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Description</th>
+  </tr>
 
-     {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini
-     {%endcomment %} {% for product_entry in product_entries %}
-     <tr>
-       <td>{{product_entry.name}}</td>
-       <td>{{product_entry.price}}</td>
-       <td>{{product_entry.description}}</td>
-     </tr>
-     {% endfor %}
-   </table>
-   {% endif %}
+  {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini
+  {%endcomment %} {% for product_entry in product_entries %}
+  <tr>
+    <td>{{product_entry.name}}</td>
+    <td>{{product_entry.price}}</td>
+    <td>{{product_entry.description}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
 
-   <br />
+<br />
 
-   <a href="{% url 'main:create_product_entry' %}">
-     <button>Add New Product</button>
-   </a>
-   {% endblock content %}
-   ```
+<a href="{% url 'main:create_product_entry' %}">
+  <button>Add New Product</button>
+</a>
+{% endblock content %}
+```
 
-   13. Membuka `main/views.py/` dan menambahkan import sebagai berikut.
+13. Membuka `main/views.py/` dan menambahkan import sebagai berikut.
 
-   ```python
-   from django.http import HttpResponse
-   from django.core import serializers
-   ```
+```python
+from django.http import HttpResponse
+from django.core import serializers
+```
 
-   14. Membuat `show_xml`, `show_json`, `show_xml_by_id`, `show_json_by_id` untuk menampilkan respons dari input user.
+14. Membuat `show_xml`, `show_json`, `show_xml_by_id`, `show_json_by_id` untuk menampilkan respons dari input user.
 
-   ```python
-   def show_xml(request):
-       data = Product.objects.all()
-       return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```python
+def show_xml(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-   def show_json(request):
-       data = Product.objects.all()
-       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+def show_json(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-   def show_xml_by_id(request, id):
-       data = Product.objects.filter(pk=id)
-       return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+def show_xml_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-   def show_json_by_id(request, id):
-       data = Product.objects.filter(pk=id)
-       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-   ```
+def show_json_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
 
 ### Dokumentasi Postman
 
+#### JSON
+
 ![JSON](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/json.png)
+
+#### XML
 
 ![XML](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml.png)
 
+#### JSON_ID
+
 ![JSON_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/json_id.png)
+
+#### XML_ID
 
 ![XML_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml_id.png)
