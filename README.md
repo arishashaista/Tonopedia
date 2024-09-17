@@ -86,6 +86,15 @@ INSTALLED_APPS = [
 
 <h5>Class:</h5>
 <p>{{ class }}</p>
+
+<h5>Nama Produk:</h5>
+<p>{{ product_name }}</p>
+
+<h5>Harga:</h5>
+<p>{{ price }}</p>
+
+<h5>Deskripsi Produk:</h5>
+<p>{{ description }}</p>
 ```
 
 17. Mengisi berkas `models.py` pada direktori aplikasi `main` sebagai berikut.
@@ -110,12 +119,17 @@ python manage.py migrate
 
 ```python
 from django.shortcuts import render
+from .models import Product
 
 def show_main(request):
+    model = Product.objects.all()
     context = {
         'npm' : '2306123456',
         'name': 'Arisha Shaista Aurelya',
-        'class': 'PBP C'
+        'class': 'PBP C',
+        'product_name': 'Soffell',
+        'price': 27000,
+        'description': 'Soffell adalah penangkal nyamuk yang memiliki wangi lembut dan tidak membuat kulit kering',
     }
 
     return render(request, "main.html", context)
@@ -140,21 +154,22 @@ urlpatterns = [
 ...
 from django.urls import path, include
 ...
+```
+
 ```python
 urlpatterns = [
     ...
     path('', include('main.urls')),
     ...
 ]
-````
-
+```
 23. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
 24. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
 
 ### 🔄 Alur Django
 
-![Django Flow Chart](https://github.com/arishashaista/Tonopedia/blob/master/alur_bagan/bagan_request.png)  
-**Penjelasan:**  
+![Django Flow Chart](https://github.com/arishashaista/Tonopedia/blob/master/alur_bagan/bagan_request.png)
+**Penjelasan:**
 Pengguna mengirimkan permintaan melalui internet untuk mengakses halaman web. Server menerima permintaan tersebut dan memprosesnya. Kemudian, Web server bertindak sebagai perantara yang menghubungkan pengguna dengan Django. Permintaan dari website diarahkan ke urls.py yang bertugas memetakan URL ke fungsi atau kelas di views.py. Setelah URL dihubungkan, views.py menangani alur kerja aplikasi yang diperlukan. views.py berkomunikasi dengan models.py untuk mengambil atau menyimpan data ke dalam database. models.py sendiri berisi struktur dan logika yang berhubungan dengan penyimpanan data. Setelah data diproses oleh views.py, data tersebut dikirim ke berkas template HTML untuk ditampilkan kepada pengguna dalam format halaman web.
 
 ### ⚙️ Fungsi Git dalam Pengembangan Perangkat Lunak
@@ -407,3 +422,4 @@ Model Django disebut ORM (Object-Relational Mapping) karena berfungsi sebagai pe
 ![XML](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml.png)
 ![JSON_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/json_id.png)
 ![XML_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml_id.png)
+````
