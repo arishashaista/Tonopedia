@@ -150,7 +150,7 @@ urlpatterns = [
 
 21. Menambahkan fungsi impor dan rute URL pada `urls.py` yang berada di direktori `tonopedia` untuk mengonfigurasi _routing_ URL proyek.
 
-````python
+```python
 ...
 from django.urls import path, include
 ...
@@ -163,6 +163,7 @@ urlpatterns = [
     ...
 ]
 ```
+
 23. Melakukan deployment ke `Pacil Web Service` terhadap aplikasi yang sudah dibuat.
 24. Melakukan `git add, commit, dan push` untuk seluruh penambahan ataupun perubahan yang ada.
 
@@ -186,240 +187,246 @@ Model Django disebut ORM (Object-Relational Mapping) karena berfungsi sebagai pe
 
 ## Tugas 3 PBP
 
-### 1. Mengapa Diperlukan Data Delivery dalam Pengimplementasian Sebuah Platform?
+### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
-        __Jawaban__:
-        Data delivery adalah komponen esensial dalam implementasi platform karena menghubungkan berbagai bagian sistem, memastikan aliran data yang lancar dan aman antara server, pengguna, dan interface. Tanpa sistem data delivery yang efektif, elemen-elemen dalam platform akan terpisah, mengakibatkan gangguan pada fungsionalitas dan kinerja platform. Selain itu, mekanisme data delivery yang baik mendukung kemampuan platform untuk berkembang, beradaptasi dengan kebutuhan yang berubah, dan mengelola peningkatan volume data dengan efisien.
+**Jawaban**:
 
-### 2. Mana Yang Lebih Baik Antara XML dan JSON? Mengapa JSON Lebih Populer Dibandingkan XML?
+Data delivery adalah komponen esensial dalam implementasi platform karena menghubungkan berbagai bagian sistem, memastikan aliran data yang lancar dan aman antara server, pengguna, dan interface. Tanpa sistem data delivery yang efektif, elemen-elemen dalam platform akan terpisah, mengakibatkan gangguan pada fungsionalitas dan kinerja platform. Selain itu, mekanisme data delivery yang baik mendukung kemampuan platform untuk berkembang, beradaptasi dengan kebutuhan yang berubah, dan mengelola peningkatan volume data dengan efisien.
 
-        __Jawaban__:
-        JSON lebih populer dibandingkan XML sebagai format pertukaran data karena kesederhanaannya, ukuran file yang lebih kecil, dan kecepatan parsing yang lebih tinggi. JSON menggunakan sintaks yang lebih sederhana tanpa memerlukan tag pembuka dan penutup, serta memiliki struktur data yang fleksibel, mirip dengan objek dan array dalam JavaScript. Selain itu, JSON menghasilkan file yang lebih kecil dan dapat diparsing dengan cepat, serta banyak digunakan dalam API modern karena kemudahan integrasinya. Keunggulan-keunggulan ini menjadikannya pilihan utama dalam banyak aplikasi web dan sistem pertukaran data. Oleh karena itu, JSON sering dianggap lebih baik daripada XML untuk banyak aplikasi web dan pertukaran data.
+### 2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 
-### 3. Fungsi dari Method `is_valid()` pada Form Django dan Mengapa Membutuhkan Method Tersebut?
+**Jawaban**:
 
-        __Jawaban__:
-        Method `is_valid()` dalam form Django memainkan peran krusial dalam memvalidasi data yang dimasukkan oleh pengguna. Fungsinya adalah untuk memastikan bahwa data yang dikirim melalui form memenuhi semua kriteria validasi yang telah ditentukan, seperti pengisian field yang wajib dan format data yang benar. Method ini akan mengembalikan True jika data valid dan False jika tidak. Selain itu, jika ada kesalahan, form.errors akan diisi dengan pesan yang menjelaskan kesalahan tersebut. Dengan demikian, method `is_valid()` membantu mencegah data yang tidak sesuai atau berpotensi berbahaya dari masuk ke dalam sistem, menjaga integritas aplikasi, dan memberikan umpan balik yang konstruktif kepada pengguna.
+JSON lebih populer dibandingkan XML sebagai format pertukaran data karena kesederhanaannya, ukuran file yang lebih kecil, dan kecepatan parsing yang lebih tinggi. JSON menggunakan sintaks yang lebih sederhana tanpa memerlukan tag pembuka dan penutup, serta memiliki struktur data yang fleksibel, mirip dengan objek dan array dalam JavaScript. Selain itu, JSON menghasilkan file yang lebih kecil dan dapat diparsing dengan cepat, serta banyak digunakan dalam API modern karena kemudahan integrasinya. Keunggulan-keunggulan ini menjadikannya pilihan utama dalam banyak aplikasi web dan sistem pertukaran data. Oleh karena itu, JSON sering dianggap lebih baik daripada XML untuk banyak aplikasi web dan pertukaran data.
 
-### Mengapa Dibutuhkan `csrf_token` Saat Membuat Form di Django? Apa yang Dapat Terjadi Jika Tidak Menambahkan `csrf_token` Pada Form Django? Bagaimana Hal Tersebut Dapat Dimanfaatkan Oleh Penyerang?
+### 3. Jelaskan fungsi dari method `is_valid()` pada form Django dan mengapa kita membutuhkan method tersebut?
 
-        __Jawaban__:
+**Jawaban**:
 
-        Cross-Site Request Forgery (CSRF) Token adalah mekanisme keamanan yang penting untuk melindungi aplikasi web dari serangan CSRF. Token ini memastikan bahwa permintaan POST yang diterima oleh server berasal dari situs yang sah, sehingga mencegah modifikasi data yang tidak sah melalui permintaan palsu. Dengan adanya csrf_token, aplikasi dapat memastikan bahwa permintaan yang dikirim benar-benar berasal dari situs yang sah dan melindungi data serta informasi pribadi pengguna dari modifikasi yang tidak sah.
+Method `is_valid()` dalam form Django memainkan peran krusial dalam memvalidasi data yang dimasukkan oleh pengguna. Fungsinya adalah untuk memastikan bahwa data yang dikirim melalui form memenuhi semua kriteria validasi yang telah ditentukan, seperti pengisian field yang wajib dan format data yang benar. Method ini akan mengembalikan True jika data valid dan False jika tidak. Selain itu, jika ada kesalahan, form.errors akan diisi dengan pesan yang menjelaskan kesalahan tersebut. Dengan demikian, method `is_valid()` membantu mencegah data yang tidak sesuai atau berpotensi berbahaya dari masuk ke dalam sistem, menjaga integritas aplikasi, dan memberikan umpan balik yang konstruktif kepada pengguna.
 
-        Tanpa csrf_token, penyerang dapat membuat situs web berbahaya atau memodifikasi situs yang sudah ada, lalu pengguna yang telah login ke aplikasi Django mungkin tanpa sadar mengunjungi situs berbahaya tersebut. Situs berbahaya tersebut dapat memuat form tersembunyi yang mengirimkan permintaan ke aplikasi Django, memanfaatkan cookies sesi yang valid dari pengguna. Karena server tidak dapat membedakan antara permintaan yang sah dan yang palsu tanpa token ini, permintaan palsu akan tampak sah.
+### 4. Mengapa kita membutuhkan `csrf_token` saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan `csrf_token` pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 
-        Django menghasilkan token unik untuk setiap sesi pengguna, yang disertakan dalam setiap form sebagai field tersembunyi. Saat form disubmit, Django memeriksa kecocokan token tersebut. Jika token yang diterima berbeda dari yang diharapkan, permintaan akan ditolak. Dengan cara ini, CSRF token membantu menjaga keamanan aplikasi dengan memastikan bahwa hanya permintaan yang sah dan berasal dari sesi pengguna yang terotentikasi yang dapat memodifikasi data atau melakukan tindakan.
+**Jawaban**:
 
-### 1. Implementasi Tugas 3 PBP Step-by-Step
+Cross-Site Request Forgery (CSRF) Token adalah mekanisme keamanan yang penting untuk melindungi aplikasi web dari serangan CSRF. Token ini memastikan bahwa permintaan POST yang diterima oleh server berasal dari situs yang sah, sehingga mencegah modifikasi data yang tidak sah melalui permintaan palsu. Dengan adanya csrf_token, aplikasi dapat memastikan bahwa permintaan yang dikirim benar-benar berasal dari situs yang sah dan melindungi data serta informasi pribadi pengguna dari modifikasi yang tidak sah.
 
-        __Jawaban__:
-    1. Membuat direktori `templates` pada direktori utama dan isi direktori tersebut dengan `base.html` sebagai berikut untuk membuat kerangka umum.
+Tanpa csrf_token, penyerang dapat membuat situs web berbahaya atau memodifikasi situs yang sudah ada, lalu pengguna yang telah login ke aplikasi Django mungkin tanpa sadar mengunjungi situs berbahaya tersebut. Situs berbahaya tersebut dapat memuat form tersembunyi yang mengirimkan permintaan ke aplikasi Django, memanfaatkan cookies sesi yang valid dari pengguna. Karena server tidak dapat membedakan antara permintaan yang sah dan yang palsu tanpa token ini, permintaan palsu akan tampak sah.
 
-    ```html
-    {% load static %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {% block meta %} {% endblock meta %}
-    </head>
+Django menghasilkan token unik untuk setiap sesi pengguna, yang disertakan dalam setiap form sebagai field tersembunyi. Saat form disubmit, Django memeriksa kecocokan token tersebut. Jika token yang diterima berbeda dari yang diharapkan, permintaan akan ditolak. Dengan cara ini, CSRF token membantu menjaga keamanan aplikasi dengan memastikan bahwa hanya permintaan yang sah dan berasal dari sesi pengguna yang terotentikasi yang dapat memodifikasi data atau melakukan tindakan.
 
-    <body>
-        {% block content %} {% endblock content %}
-    </body>
-    </html>
-    ```
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
-    2. Menambahkan kode berikut pada `tonopedia/settings.py/` :
+**Jawaban**:
 
-    ```
-    ...
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [BASE_DIR / 'templates'], # Tambahkan konten baris ini
-            'APP_DIRS': True,
-            ...
-        }
-    ]
-    ...
-    ```
+1. Membuat direktori `templates` pada direktori utama dan isi direktori tersebut dengan `base.html` sebagai berikut untuk membuat kerangka umum.
 
-    3. Mengubah `main.html` pada `main/templates/` sebagai berikut.
+   ```html
+   {% load static %}
+   <!DOCTYPE html>
+   <html lang="en">
+     <head>
+       <meta charset="UTF-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       {% block meta %} {% endblock meta %}
+     </head>
 
-    ```
-    {% extends 'base.html' %} {% block content %}
-    <h1>Tonopedia</h1>
+     <body>
+       {% block content %} {% endblock content %}
+     </body>
+   </html>
+   ```
 
-    <h5>NPM: {{ npm }}</h5>
+   2. Menambahkan kode berikut pada `tonopedia/settings.py/` :
 
-    <h5>Name: {{ name }}</h5>
+   ```
+   ...
+   TEMPLATES = [
+       {
+           'BACKEND': 'django.template.backends.django.DjangoTemplates',
+           'DIRS': [BASE_DIR / 'templates'], # Tambahkan konten baris ini
+           'APP_DIRS': True,
+           ...
+       }
+   ]
+   ...
+   ```
 
-    <h5>Class: {{ class }}</h5>
+   3. Mengubah `main.html` pada `main/templates/` sebagai berikut.
 
-    {% endblock content %}
-    ```
+   ```
+   {% extends 'base.html' %} {% block content %}
+   <h1>Tonopedia</h1>
 
-    4. Menambahkan atribut `time` dan `id` pada `models.py` dan melakukan migrasi model.
+   <h5>NPM: {{ npm }}</h5>
 
-    ```
-    from django.db import models
-    import uuid
+   <h5>Name: {{ name }}</h5>
 
-    class Product(models.Model):
-        id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-        name = models.CharField(max_length=255)
-        price = models.IntegerField()
-        description = models.TextField()
-    ```
+   <h5>Class: {{ class }}</h5>
 
-    5. Membuat `forms.py` pada direktori `main` untuk kebutuhan input dari user.
+   {% endblock content %}
+   ```
 
-    ```
-    from django.forms import ModelForm
-    from main.models import Product
+   4. Menambahkan atribut `time` dan `id` pada `models.py` dan melakukan migrasi model.
 
-    class ProductForm(ModelForm):
-        class Meta:
-            model = Product
-            fields = ["name", "price", "description"]
-    ```
+   ```
+   from django.db import models
+   import uuid
 
-    6. Menambahkan import pada `main/views.py/` sebagai berikut.
+   class Product(models.Model):
+       id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+       name = models.CharField(max_length=255)
+       price = models.IntegerField()
+       description = models.TextField()
+   ```
 
-    ```python
-    from django.shortcuts import render, redirect
-    from main.forms import ProductForm
-    from main.models import Product
-    ```
+   5. Membuat `forms.py` pada direktori `main` untuk kebutuhan input dari user.
 
-    7. Membuat fungsi untuk menambahkan produk baru.
+   ```
+   from django.forms import ModelForm
+   from main.models import Product
 
-    ```python
-    def create_product_entry(request):
-        form = ProductForm(request.POST or None)
+   class ProductForm(ModelForm):
+       class Meta:
+           model = Product
+           fields = ["name", "price", "description"]
+   ```
 
-        if form.is_valid() and request.method == "POST":
-            form.save()
-            return redirect('main:show_main')
+   6. Menambahkan import pada `main/views.py/` sebagai berikut.
 
-        context = {'form': form}
-        return render(request, "create_product_entry.html", context)
-    ```
+   ```python
+   from django.shortcuts import render, redirect
+   from main.forms import ProductForm
+   from main.models import Product
+   ```
 
-    8. Menambahkan kode berikut pada fungsi `show_main`.
+   7. Membuat fungsi untuk menambahkan produk baru.
 
-    ```python
-        context = {
-            ...
-            'product_entries': model,
-            ...
-        }
-    ```
+   ```python
+   def create_product_entry(request):
+       form = ProductForm(request.POST or None)
 
-    9. Membuka `urls.py` pada direktori `main` dan import fungsi `create_product_entry`.
+       if form.is_valid() and request.method == "POST":
+           form.save()
+           return redirect('main:show_main')
 
-    ```python
-    from main.views import show_main, create_product_entry
-    ```
+       context = {'form': form}
+       return render(request, "create_product_entry.html", context)
+   ```
 
-    10. Menambahkan path URL ke dalam variabel `urlpatterns` pada `main/urls.py/`.
+   8. Menambahkan kode berikut pada fungsi `show_main`.
 
-    ```python
-    urlpatterns = [
-        ...
-        path('create-product-entry', create_product_entry, name='create_product_entry'),
-        ...
-    ]
-    ```
+   ```python
+       context = {
+           ...
+           'product_entries': model,
+           ...
+       }
+   ```
 
-    11. Membuat berkas HTML baru dengan nama `create_proudct_entry.html` pada direktori `main/templates` dan isi dengan kode berikut.
+   9. Membuka `urls.py` pada direktori `main` dan import fungsi `create_product_entry`.
 
-    ```html
-    {% extends 'base.html' %} {% block content %}
-    <h1>Add New Product Entry</h1>
+   ```python
+   from main.views import show_main, create_product_entry
+   ```
 
-    <form method="POST">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-        <tr>
-        <td></td>
-        <td>
-            <input type="submit" value="Add New Product" />
-        </td>
-        </tr>
-    </table>
-    </form>
+   10. Menambahkan path URL ke dalam variabel `urlpatterns` pada `main/urls.py/`.
 
-    {% endblock %}
-    ```
+   ```python
+   urlpatterns = [
+       ...
+       path('create-product-entry', create_product_entry, name='create_product_entry'),
+       ...
+   ]
+   ```
 
-    12. Membuka `main.html` dan tambahkan kode berikut.
+   11. Membuat berkas HTML baru dengan nama `create_proudct_entry.html` pada direktori `main/templates` dan isi dengan kode berikut.
 
-    ```html
-    {% if not product_entries %}
-    <p>Belum ada produk yang diunggah.</p>
-    {% else %}
-    <table>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Description</th>
-    </tr>
+   ```html
+   {% extends 'base.html' %} {% block content %}
+   <h1>Add New Product Entry</h1>
 
-    {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini
-    {%endcomment %} {% for product_entry in product_entries %}
-    <tr>
-        <td>{{product_entry.name}}</td>
-        <td>{{product_entry.price}}</td>
-        <td>{{product_entry.description}}</td>
-    </tr>
-    {% endfor %}
-    </table>
-    {% endif %}
+   <form method="POST">
+     {% csrf_token %}
+     <table>
+       {{ form.as_table }}
+       <tr>
+         <td></td>
+         <td>
+           <input type="submit" value="Add New Product" />
+         </td>
+       </tr>
+     </table>
+   </form>
 
-    <br />
+   {% endblock %}
+   ```
 
-    <a href="{% url 'main:create_product_entry' %}">
-    <button>Add New Product</button>
-    </a>
-    {% endblock content %}
-    ```
+   12. Membuka `main.html` dan tambahkan kode berikut.
 
-    13. Membuka `main/views.py/` dan menambahkan import sebagai berikut.
+   ```html
+   {% if not product_entries %}
+   <p>Belum ada produk yang diunggah.</p>
+   {% else %}
+   <table>
+     <tr>
+       <th>Name</th>
+       <th>Price</th>
+       <th>Description</th>
+     </tr>
 
-    ```python
-    from django.http import HttpResponse
-    from django.core import serializers
-    ```
+     {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini
+     {%endcomment %} {% for product_entry in product_entries %}
+     <tr>
+       <td>{{product_entry.name}}</td>
+       <td>{{product_entry.price}}</td>
+       <td>{{product_entry.description}}</td>
+     </tr>
+     {% endfor %}
+   </table>
+   {% endif %}
 
-    14. Membuat `show_xml`, `show_json`, `show_xml_by_id`, `show_json_by_id` untuk menampilkan respons dari input user.
+   <br />
 
-    ```python
-    def show_xml(request):
-        data = Product.objects.all()
-        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+   <a href="{% url 'main:create_product_entry' %}">
+     <button>Add New Product</button>
+   </a>
+   {% endblock content %}
+   ```
 
-    def show_json(request):
-        data = Product.objects.all()
-        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+   13. Membuka `main/views.py/` dan menambahkan import sebagai berikut.
 
-    def show_xml_by_id(request, id):
-        data = Product.objects.filter(pk=id)
-        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+   ```python
+   from django.http import HttpResponse
+   from django.core import serializers
+   ```
 
-    def show_json_by_id(request, id):
-        data = Product.objects.filter(pk=id)
-        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-    ```
+   14. Membuat `show_xml`, `show_json`, `show_xml_by_id`, `show_json_by_id` untuk menampilkan respons dari input user.
+
+   ```python
+   def show_xml(request):
+       data = Product.objects.all()
+       return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+   def show_json(request):
+       data = Product.objects.all()
+       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+   def show_xml_by_id(request, id):
+       data = Product.objects.filter(pk=id)
+       return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+   def show_json_by_id(request, id):
+       data = Product.objects.filter(pk=id)
+       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+   ```
 
 ### Dokumentasi Postman
 
 ![JSON](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/json.png)
+
 ![XML](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml.png)
+
 ![JSON_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/json_id.png)
+
 ![XML_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml_id.png)
-````
