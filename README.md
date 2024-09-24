@@ -438,3 +438,150 @@ def show_json_by_id(request, id):
 #### XML_ID
 
 ![XML_ID](https://github.com/arishashaista/Tonopedia/blob/master/hasil_postman/xml_id.png)
+
+## Tugas 4 PBP
+
+### 1. Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`?
+
+**Jawaban**:
+
+- Ketika menggunakan `HttpResponseRedirect()`, diperlukan untuk menyebutkan URL tujuan secara eksplisit. Sementara, ketika menggunakan `redirect()`, fungsi ini dapat menerima URL, nama view, atau objek model sebagai argumen, dan akan membangun URL yang sesuai sehingga lebih fleksibel dan mudah dibaca.
+
+### 2. Jelaskan cara kerja penghubungan model Product dengan User!
+
+**Jawaban**:
+
+- Model `Product` dengan `User` di Django bekerja melalui `ForeignKey`. Cara menghubungkan model `Product` dengan `User` adalah dengan mengaitkan setiap entri produk yang dibuat oleh pengguna dengan user yang sedang login. `ForeignKey` digunakan untuk membangun relasi satu-ke-banyak antara `Product` dan `User`. Artinya, seorang user dapat memiliki banyak entri produk. Selain itu, parameter `on_delete=models.CASCADE` berfungsi untuk menghapus semua entri produk yang terkait jika user tersebut dihapus dari sistem.
+
+- Contoh:
+
+```python
+class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+
+### 3. Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+
+**Jawaban**:
+
+- Authentication (Otentikasi) adalah proses memverifikasi identitas pengguna menggunakan kredensial seperti username dan password, untuk memastikan bahwa pengguna adalah orang yang berwenang.
+- Authorization (Otorisasi) adalah proses menentukan hak akses pengguna setelah terautentikasi, yaitu menentukan apa yang diizinkan untuk dilakukan oleh pengguna di dalam sistem, seperti mengakses atau mengubah data.
+- Implementasi di Django: Django menangani otentikasi dengan sistem bawaan `(django.contrib.auth)` menggunakan fungsi seperti `authenticate()` dan `login()`. Sementara, otorisasi diatur menggunakan izin (permissions) dan grup. Django memeriksa izin pengguna, misalnya dengan `user.has_perm()`, untuk menentukan tindakan yang diizinkan bagi pengguna yang telah terautentikasi.
+
+### 4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+
+**Jawaban**:
+
+- Django mengingat pengguna yang telah login dengan menggunakan cookies dan session. Setelah login, Django menyimpan session ID di cookie pada browser pengguna, yang dikirim kembali ke server di setiap permintaan untuk mengidentifikasi pengguna tanpa perlu login lagi.
+- Kegunaan lain dari cookies adalahmMenyimpan preferensi pengguna, personalisasi konten, melacak aktivitas pengguna untuk analitik, dan menyimpan data sementara seperti keranjang belanja.
+- Tidak semua cookies aman. Cookies rentan terhadap serangan jika tidak diatur dengan baik. Secure cookies hanya dikirim melalui HTTPS, dan HttpOnly cookies mencegah akses dari JavaScript, sehingga lebih aman Cookies bisa disalahgunakan melalui serangan seperti session hijacking atau CSRF, tetapi Django memiliki mekanisme seperti CSRF tokens untuk melindungi dari risiko ini.
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara _step-by-step_ (bukan hanya sekadar mengikuti tutorial).
+
+**Jawaban**:</br>
+
+1. Menambahkan import `UserCreationForm` dan `messages` pada `main/views.py`.
+2. Membuat dan menambahkan fungsi untuk register.
+3. Membuat berkas baru bernama `register.html` pada direktori `main/templates` untuk membuat halaman Register.
+4. Import fungsi `register` pada `main/urls.py` dan tambahkan _path url_ ke dalam `urlpatterns`.
+5. Membuat fungsi untuk logout yaitu `logout_user` dan import `logout` pada `main/views.py`
+6. Menambahkan potongan kode ini pada `main/templates/main.html`.
+
+```html
+...
+<a href="{% url 'main:logout' %}">
+  <button>Logout</button>
+</a>
+...
+```
+
+7. Import fungsi `logout_user` dan menambahkan _path url_ dalam `urlpatterns` untuk mengakses fungsi di `main/urls.py`.
+8. Merestriksi akses halaman main dengan cara menambahkan import `login_required` pada `main/views.py` dan menambahkan potongan kode berikut di atas fungsi `show_main`.
+
+```python
+@login_required(login_url='/login')
+```
+
+9. Menambahkan import berikut pada `main/views.py`.
+
+```python
+import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+```
+
+10. Mengganti kode yang ada pada blok `if form.is_valid()` menjadi potongan kode berikut pada fungsi `login_user`.
+
+```python
+...
+if form.is_valid():
+    user = form.get_user()
+    login(request, user)
+    response = HttpResponseRedirect(reverse("main:show_main"))
+    response.set_cookie('last_login', str(datetime.datetime.now()))
+    return response
+...
+```
+
+11. Menambahkan potongan kode berikut pada fungsi `show_main` bagian `context`.
+
+```python
+context = {
+    ...
+    'last_login': request.COOKIES['last_login'],
+}
+```
+
+12. Mengubah fungsi `logout_user` menjadi sebagai berikut.
+
+```python
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+
+13. Menambahkan potongan kode berikut pada `main/templates/main.html`.
+
+```html
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+```
+
+14. Import `from django.contrib.auth.models import User` pada `main/models.py` kemudian menambahkan `user = models.ForeignKey(User, on_delete=models.CASCADE)` pada model `Product`.
+15. Mengubah kode di fungsi `create_product_entry` pada `main/views.py`sebagai berikut.
+
+```python
+def create_product_entry(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        product_entry = form.save(commit=False)
+        product_entry.user = request.user
+        product_entry.save()
+        return redirect('main:show_main')
+
+    context = {'form': form}
+    return render(request, "create_product_entry.html", context)
+```
+
+16. Mengubah value dari `model` dan `context` pada fungsi `show_main` menjadi seperti berikut.
+
+```python
+def show_main(request):
+    model = MoodEntry.objects.filter(user=request.user)
+
+    context = {
+         'name': request.user.username,
+         ...
+    }
+...
+```
+
+17. Menyimpan seluruh perubahan dengan melakukan `makemigrations` dan `migrate`.
+18. Menambahkan `import os` pada `tonopedia/settings.py` dan mengganti variabel `DEBUG` menjadi seperti berikut.
+
+```
+PRODUCTION = os.getenv("PRODUCTION", False)
+DEBUG = not PRODUCTION
+```
