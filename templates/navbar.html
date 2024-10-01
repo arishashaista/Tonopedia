@@ -11,15 +11,15 @@
                 </h1>
             </div>
             
-            <!-- Navigasi -->
+            <!-- Navigasi (Desktop) -->
             <div class="hidden md:flex items-center space-x-6">
-                <a class="text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Home</a>
-                <a class="text-[#000000] hover:text-[#42B549]  transition duration-300 ease-in-out">My Product</a>
-                <a class="text-[#000000] hover:text-[#42B549]  transition duration-300 ease-in-out">Order</a>
-                <a class="text-[#000000] hover:text-[#42B549]  transition duration-300 ease-in-out">Finance</a>
+                <a href="#" class="text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Home</a>
+                <a href="#" class="text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">My Product</a>
+                <a href="#" class="text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Order</a>
+                <a href="#" class="text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Finance</a>
             </div>
 
-            <!-- User Actions -->
+            <!-- User Actions (Desktop) -->
             <div class="hidden md:flex items-center space-x-4">
                 {% if user.is_authenticated %}
                 <div class="relative">
@@ -42,18 +42,49 @@
                 <a href="{% url 'main:register' %}" class="bg-white hover:bg-gray-100 text-[#42B549] font-bold py-2 px-4 rounded transition duration-300">Register</a>
                 {% endif %}
             </div>
+
+            <!-- Hamburger Menu (Mobile) -->
+            <div class="md:hidden flex items-center">
+                <button id="hamburgerButton" class="text-[#000000] hover:text-[#42B549] focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
         </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden px-4 pt-4 pb-2 space-y-2 bg-white shadow-lg">
+        <a href="#" class="block text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Home</a>
+        <a href="#" class="block text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">My Product</a>
+        <a href="#" class="block text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Order</a>
+        <a href="#" class="block text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Finance</a>
+        {% if user.is_authenticated %}
+        <a href="#" class="block text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">My Account</a>
+        <a href="{% url 'main:logout' %}" class="block text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Logout</a>
+        {% else %}
+        <a href="{% url 'main:login' %}" class="block bg-white hover:bg-gray-100 text-[#42B549] font-bold py-2 px-4 rounded transition duration-300">Login</a>
+        <a href="{% url 'main:register' %}" class="block bg-white hover:bg-gray-100 text-[#42B549] font-bold py-2 px-4 rounded transition duration-300">Register</a>
+        {% endif %}
     </div>
 </nav>
 
-<!-- JavaScript untuk mengatur dropdown -->
+<!-- JavaScript untuk mengatur dropdown dan mobile menu -->
 <script>
     const userMenuButton = document.getElementById('userMenuButton');
     const userMenuDropdown = document.getElementById('userMenuDropdown');
+    const hamburgerButton = document.getElementById('hamburgerButton');
+    const mobileMenu = document.getElementById('mobileMenu');
 
     userMenuButton.addEventListener('click', () => {
         // Toggle class hidden pada dropdown
         userMenuDropdown.classList.toggle('hidden');
+    });
+
+    hamburgerButton.addEventListener('click', () => {
+        // Toggle class hidden pada mobile menu
+        mobileMenu.classList.toggle('hidden');
     });
 
     // Menutup dropdown jika klik di luar area

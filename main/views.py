@@ -100,6 +100,6 @@ def edit_product(request, id):
     return render(request, "edit_product.html", context)
 
 def delete_product(request, id):
-    mood = Product.objects.get(pk = id)
-    mood.delete()
+    product = Product.objects.get(pk = id)
+    product.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
