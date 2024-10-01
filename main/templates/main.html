@@ -1,43 +1,50 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Tonopedia</h1>
+{% extends 'base.html' %}
+{% load static %}
 
-<h5>NPM: {{ npm }}</h5>
+{% block meta %}
+<title>Tonopedia</title>
+{% endblock meta %}
+{% block content %}
+{% include 'navbar.html' %}
 
-<h5>Name: {{ name }}</h5>
+<div class="overflow-x-hidden px-4 md:px-8 pb-8 pt-24 min-h-screen bg-gray-100 flex flex-col">
 
-<h5>Class: {{ class }}</h5>
+    <!-- Ads section diletakkan lebih ke atas -->
+    <div class="ads-section grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+      <!-- Iklan 1 -->
+      <div>
+        <img src="{% static 'image/iklan1.png' %}" alt="Iklan 1" class="w-full h-[240px] object-cover rounded-lg shadow-md">
+      </div>
+      <!-- Iklan 2 -->
+      <div>
+        <img src="{% static 'image/ads2.jpg' %}" alt="Iklan 2" class="w-full h-[240px] object-cover rounded-lg shadow-md">
+      </div>
+    </div>
 
-{% if not product_entries %}
-<p>Belum ada produk yang diunggah.</p>
-{% else %}
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Description</th>
-  </tr>
 
-  {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini
-  {%endcomment %} {% for product_entry in product_entries %}
-  <tr>
-    <td>{{product_entry.name}}</td>
-    <td>{{product_entry.price}}</td>
-    <td>{{product_entry.description}}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
+    <!-- Tombol Add New Product -->
+    <a href="{% url 'main:create_product_entry' %}" 
+       class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-1">
+       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+       </svg>
+       <span>Add New Product</span>
+    </a>
 
-<br />
+    <!-- Display product entries -->
+    {% if not product_entries %}
+    <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+        <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4" />
+        <p class="text-center text-gray-600 mt-4">Belum ada data produk pada toko Anda.</p>
+    </div>
+    {% else %}
+    <div class="flex flex-wrap justify-center">
+      {% for product_entry in product_entries %}
+          {% include 'card_product.html' with product_entry=product_entry %}
+      {% endfor %}
+    </div>
+    </div>
+    {% endif %}
 
-<br />
-<a href="{% url 'main:create_product_entry' %}">
-  <button>Add New Product</button>
-</a>
-<br />
-
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+</div>
 {% endblock content %}

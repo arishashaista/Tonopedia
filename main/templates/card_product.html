@@ -1,0 +1,30 @@
+{% load static %}
+<div class="bg-white shadow-lg rounded-lg overflow-hidden w-[250px] m-4 h-[360px] flex flex-col justify-between transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+    <!-- Gambar produk -->
+    <img src="{% static 'image/indomie.webp' %}" alt="{{ product_entry.name }}" class="w-full h-[180px] object-cover">
+
+    <!-- Informasi Produk -->
+    <div class="p-4 flex-grow">
+        <!-- Nama produk -->
+        <h3 class="text-lg font-bold mb-0.5 leading-tight text-[#212121]">{{ product_entry.name }}</h3>
+        
+        <!-- Harga Produk -->
+        <p class="text-xl font-bold text-[#03AC0E] mb-0.5 leading-tight">Rp{{ product_entry.price }}</p>
+
+        <!-- Deskripsi Produk -->
+        <p class="text-sm text-[#757575] mb-1 leading-tight">{{ product_entry.description|truncatewords:10 }}</p>
+
+        <!-- Nama Toko (User yang menambahkan produk) -->
+        <p class="text-sm text-[#757575] leading-tight">by {{ product_entry.user.username }}</p>
+    </div>
+
+    <!-- Tombol Edit dan Delete di tengah, tanpa background abu-abu -->
+    <div class="flex justify-center items-center px-4 space-x-4 mb-8">
+        <a href="{% url 'main:edit_product' product_entry.pk %}" class="bg-[#03AC0E] hover:bg-[#028A0E] text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+            Edit
+        </a>
+        <a href="{% url 'main:delete_product' product_entry.pk %}" class="bg-[#F44336] hover:bg-[#D32F2F] text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+            Delete
+        </a>
+    </div>
+</div>

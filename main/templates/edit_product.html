@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<!-- Padding to prevent content from being covered by navbar -->
+<div class="pt-16"> <!-- Adds space equivalent to the height of the navbar -->
+  <div class="max-w-3xl mx-auto py-12">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Edit Produk</h1>
+
+    <form method="POST" class="bg-white shadow-md rounded-lg px-8 py-6">
+      {% csrf_token %}
+      <div class="space-y-6">
+        <!-- Field Nama Produk -->
+        <div class="flex flex-col mb-4">
+          <label for="{{ form.name.id_for_label }}" class="text-gray-700 font-semibold">Nama Produk</label>
+          <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value }}" class="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          <p class="text-red-500 text-sm">{{ form.name.errors }}</p>
+        </div>
+
+        <!-- Field Harga Produk -->
+        <div class="flex flex-col mb-4">
+          <label for="{{ form.price.id_for_label }}" class="text-gray-700 font-semibold">Harga Produk</label>
+          <input type="number" name="{{ form.price.name }}" id="{{ form.price.id_for_label }}" value="{{ form.price.value }}" class="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+          <p class="text-red-500 text-sm">{{ form.price.errors }}</p>
+        </div>
+
+        <!-- Field Deskripsi Produk -->
+        <div class="flex flex-col mb-4">
+          <label for="{{ form.description.id_for_label }}" class="text-gray-700 font-semibold">Deskripsi Produk</label>
+          <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">{{ form.description.value }}</textarea>
+          <p class="text-red-500 text-sm">{{ form.description.errors }}</p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-6">
+        <button type="submit" class="w-full bg-[#42B549] hover:bg-[#2f8c41] text-white font-bold py-3 rounded-lg transition duration-300 ease-in-out">
+          Edit Produk
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

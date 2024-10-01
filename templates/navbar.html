@@ -1,0 +1,65 @@
+{% load static %}
+
+<nav class="shadow-lg fixed top-0 left-0 z-40 w-screen bg-[#FFFFFF]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo dan Nama -->
+            <div class="flex items-center space-x-3">
+                <img src="{% static 'image/logo-tonopedia.png' %}" alt="Tonopedia Logo" class="h-7 w-7">
+                <h1 class="text-2xl font-bold text-[#347928]">
+                    Tonopedia
+                </h1>
+            </div>
+            
+            <!-- Navigasi -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a class="text-[#000000] hover:text-[#42B549] transition duration-300 ease-in-out">Home</a>
+                <a class="text-[#000000] hover:text-[#42B549]  transition duration-300 ease-in-out">My Product</a>
+                <a class="text-[#000000] hover:text-[#42B549]  transition duration-300 ease-in-out">Order</a>
+                <a class="text-[#000000] hover:text-[#42B549]  transition duration-300 ease-in-out">Finance</a>
+            </div>
+
+            <!-- User Actions -->
+            <div class="hidden md:flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                <div class="relative">
+                    <!-- Dropdown Button -->
+                    <button id="userMenuButton" class="flex items-center text-[#000000] hover:text-[#42B549] focus:outline-none">
+                        Welcome, {{ user.username }}
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="userMenuDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Account</a>
+                        <a href="{% url 'main:logout' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{% url 'main:login' %}" class="bg-white hover:bg-gray-100 text-[#42B549] font-bold py-2 px-4 rounded transition duration-300">Login</a>
+                <a href="{% url 'main:register' %}" class="bg-white hover:bg-gray-100 text-[#42B549] font-bold py-2 px-4 rounded transition duration-300">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- JavaScript untuk mengatur dropdown -->
+<script>
+    const userMenuButton = document.getElementById('userMenuButton');
+    const userMenuDropdown = document.getElementById('userMenuDropdown');
+
+    userMenuButton.addEventListener('click', () => {
+        // Toggle class hidden pada dropdown
+        userMenuDropdown.classList.toggle('hidden');
+    });
+
+    // Menutup dropdown jika klik di luar area
+    document.addEventListener('click', (event) => {
+        if (!userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) {
+            userMenuDropdown.classList.add('hidden');
+        }
+    });
+</script>

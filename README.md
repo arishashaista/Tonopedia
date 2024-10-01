@@ -585,3 +585,158 @@ def show_main(request):
 PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 ```
+## Tugas 5 PBP
+### 1.  Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+**Jawaban**:</br>
+Urutan prioritas pengambilan CSS selector terlebih dahulu adalah:
+1.  Inline Styles</br>
+Gaya yang ditulis langsung pada atribut style di dalam elemen HTML memiliki prioritas tertinggi.
+```html
+<div style="color: blue;">Teks ini berwarna biru</div>
+```
+2. Selector ID</br>
+Selector yang menggunakan ID `#id` memiliki prioritas lebih tinggi dibandingkan kelas, atribut, atau selector elemen.
+
+```css
+#header {
+  background-color: yellow;
+}
+```
+3. Selector dengan Kelas, Atribut, dan Pseudo-Kelas</br>
+Selector yang menggunakan kelas (.class), atribut ([type="text"]), atau pseudo-kelas (:hover) memiliki prioritas sedang.
+
+```css
+.button {
+  padding: 10px;
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+```
+4. Selector Elemen dan Pseudo-Elemen</br>
+Selector yang menggunakan nama elemen (div, p, h1, dll.) atau pseudo-elemen (::before, ::after) memiliki prioritas terendah.
+
+```css
+p {
+  font-size: 16px;
+}
+
+h1::after {
+  content: "!";
+}
+```
+</br>
+
+5. Selector Universal dan Kombinator</br>
+Selector universal (`*`) dan kombinator seperti descendant (` `), child (`>`), adjacent sibling (`+`), dan general sibling (`~`) memiliki prioritas yang sangat rendah dan biasanya tidak mempengaruhi spesifisitas secara signifikan.
+```css
+* {
+  margin: 0;
+  padding: 0;
+}
+
+div p {
+  line-height: 1.5;
+}
+```
+6. Aturan `!important` </br>
+Jika sebuah aturan CSS menggunakan `!important`, aturan tersebut akan memiliki prioritas tertinggi dan akan mengesampingkan aturan lain, kecuali ada aturan `!important` lain dengan spesifisitas yang lebih tinggi.
+
+```css
+p {
+  color: red !important;
+}
+
+#intro p {
+  color: blue;
+}
+
+```
+
+### 2.   Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+**Jawaban**:</br>
+Responsive Design adalah pendekatan desain web yang memastikan tampilan dan fungsionalitas situs web menyesuaikan secara optimal dengan berbagai ukuran layar dan perangkat. Hal ini sangat penting untuk mengakomodasi berbagai perangkat, meningkatkan pengalaman pengguna, optimasi SEO, dan efisiensi pengembangan juga pemeliharaan.</br>
+
+- Contoh Aplikasi yang Menerapkan Responsive Design:
+Twitter, Instagram, Traveloka.
+
+- Contoh Aplikasi yang Belum Menerapkan Responsive Design: SiakNG
+
+### 3.  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+**Jawaban**:</br>
+-  **Margin** adalah ruang di luar batas (border) elemen. Ia menciptakan jarak antara elemen tersebut dengan elemen lainnya di sekitarnya.</br>
+- **Border** adalah garis yang mengelilingi padding dan konten elemen. Border dapat memiliki berbagai gaya, warna, dan ketebalan.
+- **Padding** adalah ruang di dalam border elemen, antara border dan konten elemen itu sendiri. Padding memberikan ruang internal agar konten tidak terlalu berdekatan dengan border.
+-  **Contoh Implementasi:**
+```css
+.element {
+  margin: 10px;
+  border: 2px;
+  padding-top: 5px;
+}
+```
+
+### 4.  Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+**Jawaban**:</br>
+- **Flepbox**
+    - Flepbox adalah modul layout CSS yang dirancang untuk menyusun, mengatur, dan mendistribusikan ruang di antara item dalam sebuah container, bahkan ketika ukuran mereka tidak diketahui atau dinamis. Flexbox bekerja pada satu dimensi, baik sebagai baris (horizontal) maupun kolom (vertikal).
+    - Kegunaan Flexbox:
+        - Penyusunan Satu Dimensi
+        - Responsivitas
+        - Penyesuaian Otomatis
+        - Alignment dan Justification
+- **Grid Layout**
+    - Grid Layout adalah sistem layout CSS dua dimensi yang memungkinkan pengaturan elemen dalam baris dan kolom secara bersamaan. Grid sangat cocok untuk membuat tata letak kompleks yang membutuhkan kontrol yang lebih presisi terhadap posisi dan ukuran elemen.
+    - Kegunaan Grid Layout:
+        - Tata Letak Dua Dimensi
+        - Desain Kompleks
+        - Penempatan Elemen yang Presisi
+        - Responsivitas yang Tinggi
+
+### 5.   Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+**Jawaban**:</br>
+1. Menghubungkan tailwind ke aplikasi pada `templates/base.html`.
+2. Menambahkan fitur `edit_product` dan `delete_product` sehingga User dapat menghapus atau menyunting produk yang telah dibuat.
+3. Membuat navigation bar pada `templates/navbar.html` untuk aplikasi.
+4. Mengonfigurasi static files di `settings.py` dengan cara:
+    - Menambahkan middleware WhiteNoise
+    ```python
+    MIDDLEWARE = [
+    ...
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
+    ...
+    ]
+    ```
+    - Memastikan variabel `STATIC_ROOT`, `STATICFILES_DIRS`, dan `STATIC_URL` dikonfigurasikan seperti ini.
+    ```python
+    STATIC_URL = '/static/'
+    if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static' 
+    ]
+    else:
+    STATIC_ROOT = BASE_DIR / 'static'
+    ```
+5. Membuat file `global.css` pada `static/css` dan menghubungkannya ke `base.html`.
+6. Menambahkan custom styling ke `global.css`.
+7. Melakukan styling pada halaman Login, Register, Home, Create Product, Edit Product, dan lainnya yang membutuhkan styling.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
