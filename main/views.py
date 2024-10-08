@@ -1,26 +1,25 @@
 from django.shortcuts import render, redirect, reverse
 from main.forms import ProductForm
 from main.models import Product
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
+import json
 
 @login_required(login_url='/login')
 def show_main(request):
-    model = Product.objects.filter(user=request.user)
     context = {
         'npm' : '2306123456',
         'name': request.user.username,
         'class': 'PBP C',
-        'product_entries': model,
-        'last_login': request.COOKIES['last_login']
+        'last_login': request.COOKIES.get('last_login', 'Never')
     }
 
     return render(request, "main.html", context)
@@ -38,11 +37,11 @@ def create_product_entry(request):
     return render(request, "create_product_entry.html", context)
 
 def show_xml(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = Product.objects.all()
+    data = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -103,3 +102,29 @@ def delete_product(request, id):
     product = Product.objects.get(pk = id)
     product.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    try:
+        data = json.loads(request.body)
+        name = strip_tags(data.get("name", "").strip())
+        description = strip_tags(data.get("description", "").strip())
+        price = data.get("price")
+
+        if not name or not description or not price:
+            return JsonResponse({'error': 'Invalid input.'}, status=400)
+
+        new_product = Product(
+            name=name, 
+            price=price,
+            description=description,
+            user=request.user
+        )
+        new_product.save()
+
+        return JsonResponse({'message': 'Product created successfully.'}, status=201)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON.'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

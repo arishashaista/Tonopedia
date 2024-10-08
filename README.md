@@ -726,16 +726,79 @@ Twitter, Instagram, Traveloka.
 6. Menambahkan custom styling ke `global.css`.
 7. Melakukan styling pada halaman Login, Register, Home, Create Product, Edit Product, dan lainnya yang membutuhkan styling.
 
+## Tugas 6 PBP
+### 1.  Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+Berikut beberapa manfaat dari penggunaan JavaScript:
+- **Interactivity**: Memungkinkan pembuatan elemen interaktif seperti menu dropdown, slider, dan animasi untuk meningkatkan pengalaman pengguna.
+-   **Client Side Processing**: Mengurangi beban server dengan melakukan validasi form dan manipulasi data di sisi klien, sehingga meningkatkan efisiensi aplikasi.
+- **Rich Ecosystem**: Tersedia banyak framework dan library populer seperti React, Angular, dan Vue.js yang mempermudah pengembangan aplikasi kompleks.
+- **Compatibility**: Didukung oleh semua browser modern, memastikan aplikasi web dapat diakses oleh berbagai pengguna tanpa masalah kompatibilitas.
+- **Asynchronous Programming**: Mendukung teknik seperti AJAX dan Fetch API untuk melakukan permintaan data tanpa perlu memuat ulang halaman, memungkinkan aplikasi yang lebih dinamis dan responsif.
 
+### 2.  Jelaskan fungsi dari penggunaan `await` ketika kita menggunakan `fetch()`! Apa yang akan terjadi jika kita tidak menggunakan `await`?
+Fungsi penggunaan `await` ketika menggunakan `fetch()`:
+- **Menunggu Resolusi Promise**: `await` menghentikan eksekusi kode hingga Promise dari `fetch()` selesai, memungkinkan akses data yang siap digunakan.
+- **Sintaks yang Lebih Bersih**: `await` membuat kode asinkron lebih mudah dibaca dan dipahami, mirip dengan kode sinkron dibandingkan penggunaan `.then()`.
+- **Pengelolaan Error yang Lebih Mudah**: `await` memungkinkan penggunaan blok `try...catch` untuk menangani error secara langsung dan jelas.</br>
 
+Konsekuensi tidak menggunakan `await`:
+- **Kode Lebih Kompleks dan Sulit Dibaca**: Penggunaan banyak `.then()` membuat kode bertingkat dan sulit diikuti, terutama untuk operasi asinkron berantai.
+- **Pengelolaan Error Kurang Efisien**: Menangani error dengan `.catch()` kurang intuitif dibandingkan menggunakan blok `try...catch.`
+- **Eksekusi Tidak Sinkron**: Tidak dapat menunggu hasil operasi asinkron sebelum melanjutkan kode berikutnya, yang bisa menyebabkan masalah saat data diperlukan untuk langkah selanjutnya.
 
+### 3.  Mengapa kita perlu menggunakan decorator `csrf_exempt` pada view yang akan digunakan untuk AJAX `POST`?
+- Decorator `csrf_exempt` digunakan pada view AJAX POST untuk mengabaikan pengecekan `csrf_token`, sehingga memudahkan pengiriman data melalui AJAX namun meningkatkan risiko terhadap serangan CSRF.
 
+### 4.  Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+- Meskipun validasi di frontend penting untuk meningkatkan pengalaman pengguna dan memberikan umpan balik instan, pembersihan dan validasi data di backend adalah esensial untuk memastikan keamanan, integritas, dan konsistensi data. Mengandalkan hanya frontend akan meninggalkan aplikasi rentan terhadap berbagai ancaman dan masalah data, sehingga praktik terbaik adalah menerapkan validasi di kedua sisi untuk perlindungan yang komprehensif.
 
+### 5.  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+1. Menambahkan kedua impor berikut pada file `views.py`.
+```python
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+```   
+2. Membuat fungsi baru pada `views.py` dengan nama `add_product_entry_ajax` yang menerima parameter request seperti berikut.
+```python
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    name = strip_tags(request.POST.get("name"))  
+    description = strip_tags(request.POST.get("description"))  
+    price = request.POST.get("price")
+    user = request.user
 
+    new_product = Product(
+        name=name, 
+        price=price,
+        description=description,
+        user=user
+    )
+    new_product.save()
 
-
-
-
+    return HttpResponse(b"CREATED", status=201)
+```
+3. Menambahkan routing untuk fungsi `add_product_entry_ajax` di `urls.py`.
+4. Menghapus dua baris berikut pada `views.py`.
+```python
+product_entries = Product.objects.filter(user=request.user)
+```
+```python
+'product_entries': product_entries,
+```
+5. Mengubah baris pertama views untuk `show_json` dan `show_xml` seperti berikut.
+```python
+data = Product.objects.filter(user=request.user)
+```
+6. Mengapus bagian block conditional `product_entries` untuk menampilkan `card_product` ketika kosong atau tidak pada `main.html` dan menambahkan kode berikut.
+```html
+<div id="product_entry_cards"></div>
+```
+7. Membuat *block* `<script>` di bagian bawah berkas `main.html` (sebelum `{% endblock content %}`) dan membuat fungsi baru pada block `<script>` tersebut dengan nama `getProductEntries` serta `refreshProductEntries`.
+8. Menambahkan kode dibawah `div` dengan `id` `product_entry_cards` untuk mengimplementasikan modal (*Tailwind*) pada aplikasi dan menambahkan fungsi-fungsi JavaScript berikut.
+10. Mengubah bagian tombol `Add New Product Entry` dan menambahkan tombol baru untuk melakukan penambahan data dengan AJAX.
+11. Membuat fungsi baru pada block `<script> `dengan nama `addProductEntry`.
+12. Menambahkan `strip_tags` untuk membersihkan data baru dan membersihkan data dengan DOMPurify​.
 
 
 
